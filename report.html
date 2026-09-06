@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>工作述职汇报</title>
+    <style>
+        /* --- 全局重置与变量 --- */
+        :root {
+            --bg-color: #F7F8FA;       /* 高级灰白背景 */
+            --card-bg: #FFFFFF;        /* 卡片纯白 */
+            --text-main: #2C3E50;      /* 深灰蓝主文字 */
+            --text-sub: #7F8C9B;       /* 辅助文字 */
+            --accent: #5D6D7E;         /* 低饱和商务蓝 */
+            --border: #EAECEF;         /* 分割线 */
+            --spacing: 24px;           /* 基础间距 */
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "PingFang SC", "Helvetica Neue", Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* --- 容器限制 (模拟手机竖屏) --- */
+        .container {
+            max-width: 480px; /* 限制最大宽度，PC端居中显示 */
+            margin: 0 auto;
+            background: var(--bg-color);
+            min-height: 100vh;
+            padding-bottom: 40px;
+        }
+
+        /* --- 通用排版组件 --- */
+        section {
+            padding: var(--spacing);
+            margin-bottom: 10px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 24px;
+            margin-bottom: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.02); /* 极淡阴影 */
+            border: 1px solid var(--border);
+        }
+
+        h1 { font-size: 28px; font-weight: 700; letter-spacing: 1px; margin-bottom: 8px; color: var(--text-main); }
+        h2 { 
+            font-size: 18px; 
+            font-weight: 600; 
+            color: var(--accent); 
+            margin-bottom: 20px; 
+            padding-left: 12px; 
+            border-left: 3px solid var(--accent); 
+            display: flex; align-items: center;
+        }
+        h3 { font-size: 16px; font-weight: 600; margin-bottom: 8px; color: var(--text-main); }
+        p { font-size: 14px; color: var(--text-sub); margin-bottom: 12px; text-align: justify; }
+        
+        .tag {
+            display: inline-block;
+            font-size: 10px;
+            padding: 2px 8px;
+            background: #EBF0F5;
+            color: var(--accent);
+            border-radius: 4px;
+            margin-right: 6px;
+            font-weight: 600;
+        }
+
+        /* --- 1. 封面页 --- */
+        .cover {
+            height: 90vh; /* 接近全屏 */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 40px;
+            background: linear-gradient(180deg, #FFFFFF 0%, #F7F8FA 100%);
+        }
+        .cover .date { font-size: 12px; color: var(--text-sub); letter-spacing: 2px; margin-bottom: 20px; }
+        .cover .title { font-size: 36px; line-height: 1.3; margin-bottom: 16px; color: var(--text-main); }
+        .cover .subtitle { font-size: 16px; color: var(--accent); font-weight: 500; margin-bottom: 60px; }
+        .cover .info { font-size: 13px; color: var(--text-sub); border-top: 1px solid var(--border); padding-top: 20px; width: 100%; }
+
+        /* --- 2. 目录页 --- */
+        .toc-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px dashed var(--border);
+            font-size: 15px;
+            color: var(--text-main);
+        }
+        .toc-item:last-child { border-bottom: none; }
+        .toc-num { font-family: 'Georgia', serif; font-style: italic; color: var(--accent); margin-right: 12px; font-size: 18px;}
+
+        /* --- 4. 三块工作内容 --- */
+        .work-block { margin-bottom: 20px; }
+        .work-block:last-child { margin-bottom: 0; }
+        .work-header { display: flex; align-items: center; margin-bottom: 8px; }
+        .work-icon { 
+            width: 24px; height: 24px; 
+            background: var(--accent); 
+            border-radius: 4px; 
+            margin-right: 10px; 
+            opacity: 0.8;
+        }
+
+        /* --- 5. 成果数据 --- */
+        .data-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .data-item { background: #FAFBFC; padding: 16px; border-radius: 6px; text-align: center; }
+        .data-val { font-size: 24px; font-weight: 700; color: var(--accent); margin-bottom: 4px; }
+        .data-label { font-size: 11px; color: var(--text-sub); }
+
+        /* --- 列表样式 --- */
+        ul { list-style: none; padding-left: 0; }
+        li { 
+            position: relative; 
+            padding-left: 16px; 
+            margin-bottom: 10px; 
+            font-size: 14px; 
+            color: var(--text-sub); 
+        }
+        li::before {
+            content: '';
+            position: absolute;
+            left: 0; top: 9px;
+            width: 4px; height: 4px;
+            background: var(--accent);
+            border-radius: 50%;
+        }
+
+        /* --- 10. 结束页 --- */
+        .end-page {
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .end-title { font-size: 24px; color: var(--text-main); margin-bottom: 10px; }
+        .end-sub { font-size: 13px; color: var(--text-sub); letter-spacing: 1px; }
+
+        /* --- 打印/投屏优化 --- */
+        @media (min-width: 481px) {
+            body { background: #EAECEF; padding: 20px 0; }
+            .container { box-shadow: 0 0 20px rgba(0,0,0,0.05); border-radius: 12px; overflow: hidden; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    
+    <!-- 1. 封面页 -->
+    <section class="cover">
+        <div class="date">2026.09.06 · 星期日</div>
+        <h1 class="title">年度工作<br>述职汇报</h1>
+        <div class="subtitle">ANNUAL WORK REPORT</div>
+        <div class="info">
+            <p style="margin-bottom:4px;">汇报人：[您的姓名]</p>
+            <p>部　门：[所在部门/岗位]</p>
+        </div>
+    </section>
+
+    <!-- 2. 目录页 -->
+    <section>
+        <div class="card">
+            <h2>目录 CONTENTS</h2>
+            <div class="toc-item"><span><span class="toc-num">01</span>工作概述</span></div>
+            <div class="toc-item"><span><span class="toc-num">02</span>主要工作内容</span></div>
+            <div class="toc-item"><span><span class="toc-num">03</span>阶段成果展示</span></div>
+            <div class="toc-item"><span><span class="toc-num">04</span>问题与改进</span></div>
+            <div class="toc-item"><span><span class="toc-num">05</span>下阶段规划</span></div>
+        </div>
+    </section>
+
+    <!-- 3. 工作概述页 -->
+    <section>
+        <div class="card">
+            <h2>01 / 工作概述</h2>
+            <p>本阶段紧密围绕公司战略目标，聚焦核心业务指标达成。在团队协作与流程优化方面取得阶段性进展，整体工作推进有序，关键节点交付率达预期。</p>
+            <div style="margin-top:16px;">
+                <span class="tag">目标导向</span>
+                <span class="tag">效能提升</span>
+                <span class="tag">协同攻坚</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 4. 主要工作内容页 -->
+    <section>
+        <div class="card">
+            <h2>02 / 主要工作内容</h2>
+            
+            <div class="work-block">
+                <div class="work-header">
+                    <div class="work-icon"></div>
+                    <h3>核心项目推进</h3>
+                </div>
+                <ul>
+                    <li>完成XX项目一期需求调研与方案评审</li>
+                    <li>协调跨部门资源，解决3项关键技术卡点</li>
+                    <li>建立项目周报机制，确保信息同步透明</li>
+                </ul>
+            </div>
+
+            <div class="work-block">
+                <div class="work-header">
+                    <div class="work-icon" style="opacity:0.6"></div>
+                    <h3>日常运营维护</h3>
+                </div>
+                <ul>
+                    <li>处理日常工单120+，响应时效缩短15%</li>
+                    <li>完成月度数据报表自动化模板搭建</li>
+                </ul>
+            </div>
+
+            <div class="work-block">
+                <div class="work-header">
+                    <div class="work-icon" style="opacity:0.4"></div>
+                    <h3>团队能力建设</h3>
+                </div>
+                <ul>
+                    <li>组织内部技能分享会2场，覆盖全员</li>
+                    <li>梳理并沉淀标准化SOP文档5份</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 5. 阶段成果页 -->
+    <section>
+        <div class="card">
+            <h2>03 / 阶段成果</h2>
+            <p>通过精细化运营与流程再造，核心指标实现稳步增长：</p>
+            <div class="data-grid">
+                <div class="data-item">
+                    <div class="data-val">98.5%</div>
+                    <div class="data-label">任务交付率</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-val">↑ 23%</div>
+                    <div class="data-label">效率提升比</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-val">¥120W</div>
+                    <div class="data-label">成本节约额</div>
+                </div>
+                <div class="data-item">
+                    <div class="data-val">4.9</div>
+                    <div class="data-label">客户满意度</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 6. 问题不足页 -->
+    <section>
+        <div class="card">
+            <h2>04 / 问题与不足</h2>
+            <ul>
+                <li><strong>跨部门协作：</strong>部分需求对接流程仍显冗长，沟通成本偏高</li>
+                <li><strong>数据沉淀：</strong>历史数据清洗不够彻底，影响分析精度</li>
+                <li><strong>创新突破：</strong>常规工作占比过高，前瞻性探索投入不足</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 7. 改进方案页 -->
+    <section>
+        <div class="card">
+            <h2>04 / 改进方案</h2>
+            <ul>
+                <li><strong>流程瘦身：</strong>推动建立跨部门SLA标准，明确权责边界</li>
+                <li><strong>数据治理：</strong>启动专项数据清洗计划，Q4前完成归档</li>
+                <li><strong>时间重构：</strong>每周预留20%精力用于创新课题预研</li>
+                <li><strong>工具赋能：</strong>引入AI辅助工具，减少重复性人工操作</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- 8. 下一阶段规划页 -->
+    <section>
+        <div class="card">
+            <h2>05 / 下阶段规划</h2>
+            <div class="work-block">
+                <h3>🎯 Q4 核心目标</h3>
+                <p>完成XX项目二期上线，用户活跃度提升至85%以上</p>
+            </div>
+            <div class="work-block">
+                <h3>🚀 重点举措</h3>
+                <ul>
+                    <li>10月：完成全量压力测试与安全审计</li>
+                    <li>11月：启动种子用户内测与反馈迭代</li>
+                    <li>12月：正式发布并开展年度复盘总结</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 9. 总结展望页 -->
+    <section>
+        <div class="card">
+            <h2>总结与展望</h2>
+            <p>回顾本阶段工作，虽有挑战但收获颇丰。未来将继续秉持"务实精进"的态度，以结果为导向，持续深化专业能力，为团队创造更大价值。期待在下阶段工作中实现新的突破。</p>
+        </div>
+    </section>
+
+    <!-- 10. 结束致谢页 -->
+    <section class="end-page">
+        <div class="end-title">感谢聆听</div>
+        <div class="end-sub">THANKS FOR YOUR ATTENTION</div>
+        <div style="margin-top:30px; font-size:12px; color:#ccc;">© 2026 工作汇报 · 仅供内部交流</div>
+    </section>
+
+</div>
+
+</body>
+</html>
